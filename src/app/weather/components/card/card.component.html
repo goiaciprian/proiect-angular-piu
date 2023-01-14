@@ -1,0 +1,46 @@
+<ng-template *ngIf="weather === undefined;else card" >
+  <mat-progress-bar/>
+</ng-template>
+<ng-template #card>
+  <mat-card style="width: fit-content; padding: 0 1rem" appIcons >
+    <mat-card-header style="color: white; justify-content: center; align-items: center; position: relative;" >
+      <div class="options" style="position: absolute; top: 0; right: 0">
+        <button mat-icon-button (click)="refresh(city.city)">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button (click)="openEditDialog()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteCity(city.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column">
+        <img alt="condition-image" mat-card-image src="{{ weather.current.condition.icon || '' }}" />
+        {{weather.location.name}}, {{ weather.location.region }}, {{ weather.location.country}}
+      </div>
+    </mat-card-header>
+    <mat-card-content style="color: white; margin-top: .5rem; margin-bottom: 2rem;">
+      <div style="display: flex; gap: .7rem">
+        <div style="display: flex; flex-direction: column; gap: .3rem">
+          <span>Temperature: {{weather.current.temp_c}} C</span>
+          <span>Feels like: {{weather.current.feelslike_c}} C</span>
+          <span>Precipitation: {{weather.current.precip_mm}} mm</span>
+          <span>Pressure: {{weather.current.pressure_mb}} mb</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: .3rem">
+          <span>Temperature: {{weather.current.temp_f}} F</span>
+          <span>Feels like: {{weather.current.feelslike_f}} F</span>
+          <span>Precipitation: {{weather.current.precip_in}} in</span>
+          <span>Pressure: {{weather.current.pressure_in}} in</span>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <ng-template [ngIf]="loading" >
+        <mat-progress-bar style="height: 5px;width: 100%"  mode="query"/>
+      </ng-template>
+    </mat-card-footer>
+  </mat-card>
+
+</ng-template>
